@@ -1,112 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Billing Calculator</title>
+    <title> JavaScript Demo</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: linear-gradient(135deg, #f9d423, #ff4e50);
+            color: #fff;
+            text-align: center;
+            padding: 50px;
         }
 
-        h2 {
-            color: #0066cc;
+        h1 {
+            font-size: 3em;
             margin-bottom: 20px;
-        }
-
-        .calculator {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .result {
-            margin-top: 20px;
-            background-color: #e6f2ff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-            font-family: 'Courier New', monospace;
-        }
-
-        pre {
-            margin: 0;
-            font-size: 14px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #0066cc;
-            color: white;
+            font-size: 1.2em;
+            padding: 15px 30px;
+            margin: 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
+        /* Different colors for buttons */
+        #inlineBtn {
+            background: #6a11cb;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        #logBtn {
+            background: #ff6a00;
+            background: linear-gradient(45deg, #ff6a00, #ffca28);
+            color: #fff;
+        }
+
+        /* Hover effects */
         button:hover {
-            background-color: #005bb5;
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-top: 40px;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
         }
     </style>
+    <script>
+        // Internal JavaScript: runs when page loads
+        console.log('Page loaded!');
+
+        // Function called by inline event handler
+        function sayHello() {
+            console.log('sayHello() was called!');
+            alert('Hello from JavaScript!');
+        }
+
+        // Adding event listener after page loads
+        window.onload = function() {
+            document.getElementById('logBtn').addEventListener('click', function() {
+                console.log('Log Button clicked!');
+            });
+        };
+    </script>
 </head>
 <body>
-<h2>Billing Calculator</h2>
-<div class="calculator" id="calculator">
-    <button onclick="calculateBill()">Calculate Bill</button>
-</div>
-<div class="result" id="result"></div>
+    <h1> JavaScript Demo</h1>
 
-<script>
-    const GST_RATE = 0.18;
+    <!-- Inline JavaScript in button -->
+    <button id="inlineBtn" onclick="sayHello()">Click me (Inline)</button>
 
-    function calculateBill() {
-        // Collect user inputs with prompts
-        var customerName = prompt("Enter Customer Name:");
-        var productName = prompt("Enter Product Name:");
-        var quantity = Number(prompt("Enter Quantity:"));
-        let pricePerItem = Number(prompt("Enter Price per Item:"));
+    <br>
 
-        // Calculate totals
-        let totalBeforeGST = quantity * pricePerItem;
-        let gstAmount = totalBeforeGST * GST_RATE;
-        let totalAmount = totalBeforeGST + gstAmount;
+    <!-- Button with internal event listener -->
+    <button id="logBtn">Log Message</button>
 
-        // Use destructuring for neatness (example)
-        const billingDetails = {
-            customerName,
-            productName,
-            quantity,
-            pricePerItem,
-            totalBeforeGST,
-            gstAmount,
-            totalAmount
-        };
+    <br>
 
-        // Create formatted receipt using template literals
-        const receipt = `
-Customer Name: ${billingDetails.customerName}
-Product Name: ${billingDetails.productName}
-Quantity: ${billingDetails.quantity}
-Price per Item: $${billingDetails.pricePerItem.toFixed(2)}
-------------------------------
-Total before GST: $${billingDetails.totalBeforeGST.toFixed(2)}
-GST (${(GST_RATE * 100).toFixed(0)}%): $${billingDetails.gstAmount.toFixed(2)}
-------------------------------
-Total Amount: $${billingDetails.totalAmount.toFixed(2)}
-        `;
-
-        // Display the result nicely
-        document.getElementById("result").innerHTML = "<pre>" + receipt + "</pre>";
-    }
-</script>
+    <!-- Instructions for using developer tools -->
+    <p>Open your browser's developer console to see logs.</p>
 </body>
 </html>
