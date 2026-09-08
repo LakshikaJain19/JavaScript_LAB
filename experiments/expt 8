@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gym Admission Form</title>
+<style>
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, select:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: none;
+  }
+  button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Gym Admission Form</h2>
+  <form id="gymForm" novalidate>
+    <!-- PRN -->
+    <label for="prn">PRN:</label>
+    <input type="text" id="prn" name="prn" placeholder="Enter your PRN">
+    <div id="prnError" class="error-message">PRN cannot be empty.</div>
+
+    <!-- First Name -->
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
+    <div id="firstNameError" class="error-message">First name cannot be empty.</div>
+
+    <!-- Last Name -->
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
+    <div id="lastNameError" class="error-message">Last name cannot be empty.</div>
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email">
+    <div id="emailError" class="error-message">Please enter a valid email address.</div>
+
+    <!-- Phone -->
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" placeholder="Enter your 10-digit phone number">
+    <div id="phoneError" class="error-message">Please enter a valid phone number (10 digits).</div>
+
+    <!-- Age -->
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" placeholder="Enter your age" min="18" max="65">
+    <div id="ageError" class="error-message">Age must be between 18 and 65.</div>
+
+    <!-- Height -->
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" name="height" placeholder="Enter your height in cm" min="100" max="250">
+    <div id="heightError" class="error-message">Please enter a valid height in centimeters.</div>
+
+    <!-- Goals -->
+    <label for="goal">Fitness Goal:</label>
+    <select id="goal" name="goal">
+      <option value="">Select your goal</option>
+      <option value="weightloss">Weight Loss</option>
+      <option value="musclegain">Muscle Gain</option>
+      <option value="flexibility">Flexibility & Mobility</option>
+      <option value="endurance">Endurance & Stamina</option>
+    </select>
+    <div id="goalError" class="error-message">Please select a goal.</div>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('gymForm');
+
+  const prn = document.getElementById('prn');
+  const firstName = document.getElementById('firstName');
+  const lastName = document.getElementById('lastName');
+  const email = document.getElementById('email');
+  const phone = document.getElementById('phone');
+  const age = document.getElementById('age');
+  const height = document.getElementById('height');
+  const goal = document.getElementById('goal');
+
+  const prnError = document.getElementById('prnError');
+  const firstNameError = document.getElementById('firstNameError');
+  const lastNameError = document.getElementById('lastNameError');
+  const emailError = document.getElementById('emailError');
+  const phoneError = document.getElementById('phoneError');
+  const ageError = document.getElementById('ageError');
+  const heightError = document.getElementById('heightError');
+  const goalError = document.getElementById('goalError');
+
+  function validatePRN() {
+    if (prn.value.trim() === '') {
+      prnError.style.display = 'block';
+      return false;
+    } else {
+      prnError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateFirstName() {
+    if (firstName.value.trim() === '') {
+      firstNameError.style.display = 'block';
+      return false;
+    } else {
+      firstNameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateLastName() {
+    if (lastName.value.trim() === '') {
+      lastNameError.style.display = 'block';
+      return false;
+    } else {
+      lastNameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateEmail() {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) {
+      emailError.style.display = 'block';
+      return false;
+    } else {
+      emailError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validatePhone() {
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(phone.value.trim())) {
+      phoneError.style.display = 'block';
+      return false;
+    } else {
+      phoneError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateAge() {
+    const ageVal = parseInt(age.value, 10);
+    if (isNaN(ageVal) || ageVal < 18 || ageVal > 65) {
+      ageError.style.display = 'block';
+      return false;
+    } else {
+      ageError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateHeight() {
+    const heightVal = parseInt(height.value, 10);
+    if (isNaN(heightVal) || heightVal < 100 || heightVal > 250) {
+      heightError.style.display = 'block';
+      return false;
+    } else {
+      heightError.style.display = 'none';
+      return true;
+    }
+  }
+
+  function validateGoal() {
+    if (goal.value === '') {
+      goalError.style.display = 'block';
+      return false;
+    } else {
+      goalError.style.display = 'none';
+      return true;
+    }
+  }
+
+  // Event listeners for real-time validation
+  prn.addEventListener('input', validatePRN);
+  firstName.addEventListener('input', validateFirstName);
+  lastName.addEventListener('input', validateLastName);
+  email.addEventListener('input', validateEmail);
+  phone.addEventListener('input', validatePhone);
+  age.addEventListener('input', validateAge);
+  height.addEventListener('input', validateHeight);
+  goal.addEventListener('change', validateGoal);
+
+  form.addEventListener('submit', function(e) {
+    const isPRNValid = validatePRN();
+    const isFirstNameValid = validateFirstName();
+    const isLastNameValid = validateLastName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isAgeValid = validateAge();
+    const isHeightValid = validateHeight();
+    const isGoalValid = validateGoal();
+
+    if (
+      !isPRNValid || !isFirstNameValid || !isLastNameValid || !isEmailValid || 
+      !isPhoneValid || !isAgeValid || !isHeightValid || !isGoalValid
+    ) {
+      e.preventDefault();
+      alert('Please correct the errors in the form.');
+    } else {
+      alert('Form submitted successfully!');
+      // You can handle form submission here
+      // form.submit();
+    }
+  });
+</script>
+
+</body>
+</html>
