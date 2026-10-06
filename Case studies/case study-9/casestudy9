@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text Analysis Lab</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      color-scheme: light;
+      --page-bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --muted-color: #475569;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --result-bg: #f8fafc;
+      --result-border: #e2e8f0;
+      --accent: #3da2d1;
+      --accent-hover: #3730a3;
+    }
+
+    body.dark-theme {
+      color-scheme: dark;
+      --page-bg: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #e2e8f0;
+      --muted-color: #cbd5e1;
+      --input-bg: #0f172a;
+      --input-border: #475569;
+      --result-bg: #263449;
+      --result-border: #475569;
+      --accent: #5bcec4;
+      --accent-hover: #42c1ca;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--page-bg);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 28px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.1);
+    }
+
+    h1,
+    .result strong {
+      color: var(--accent);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .student {
+      margin-bottom: 24px;
+      color: var(--muted-color);
+      line-height: 1.8;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 12px;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text-color);
+      font: inherit;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: 2px solid #55d39e;
+      border-color: var(--accent);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 13px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: rgb(32, 223, 191);
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    .theme-toggle {
+      width: auto;
+      margin: 0 0 20px;
+      padding: 10px 14px;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+
+    .result {
+      margin: 10px 0;
+      padding: 14px;
+      background: var(--result-bg);
+      border: 1px solid var(--result-border);
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .result strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <button id="themeToggle" class="theme-toggle" type="button"
+      aria-label="Switch to dark theme">
+      🌙 Dark theme
+    </button>
+
+    <h1>JavaScript String &amp; Regex Lab</h1>
+
+    <div class="student">
+      <div><strong>Student Name:</strong>Lakshika Jain</div>
+      <div><strong>PRN Number:</strong> 24070521166</div>
+    </div>
+
+    <label for="textInput">Enter text to analyze</label>
+    <textarea
+      id="textInput"
+      placeholder="Example: Contact me at alex@example.com"
+    ></textarea>
+
+    <button id="analyzeButton" type="button">Analyze Text</button>
+
+    <h2>Results</h2>
+
+    <div class="result">
+      <strong>Email address</strong>
+      <span id="emailResult">No analysis yet.</span>
+    </div>
+
+    <div class="result">
+      <strong>Character count</strong>
+      <span id="characterResult">No analysis yet.</span>
+    </div>
+
+    <div class="result">
+      <strong>Word count</strong>
+      <span id="wordResult">No analysis yet.</span>
+    </div>
+
+    <div class="result">
+      <strong>Uppercase text</strong>
+      <span id="uppercaseResult">No analysis yet.</span>
+    </div>
+
+    <div class="result">
+      <strong>Lowercase text</strong>
+      <span id="lowercaseResult">No analysis yet.</span>
+    </div>
+  </main>
+
+  <script>
+    const textInput = document.getElementById("textInput");
+    const analyzeButton = document.getElementById("analyzeButton");
+    const themeToggle = document.getElementById("themeToggle");
+
+    themeToggle.addEventListener("click", function () {
+      const isDark = document.body.classList.toggle("dark-theme");
+
+      themeToggle.textContent = isDark ? "☀️ Light theme" : "🌙 Dark theme";
+      themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light theme" : "Switch to dark theme"
+      );
+    });
+
+    analyzeButton.addEventListener("click", function () {
+      const text = textInput.value;
+      const trimmedText = text.trim();
+      const emailPattern =
+        /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+      const emails = trimmedText.match(emailPattern);
+
+      document.getElementById("emailResult").textContent =
+        emails ? emails.join(", ") : "No email address found.";
+
+      document.getElementById("characterResult").textContent =
+        text.length + " characters";
+
+      const wordCount = trimmedText === ""
+        ? 0
+        : trimmedText.split(/\s+/).length;
+
+      document.getElementById("wordResult").textContent =
+        wordCount + (wordCount === 1 ? " word" : " words");
+
+      document.getElementById("uppercaseResult").textContent =
+        text ? text.toUpperCase() : "No text entered.";
+
+      document.getElementById("lowercaseResult").textContent =
+        text ? text.toLowerCase() : "No text entered.";
+    });
+  </script>
+</body>
+</html>
