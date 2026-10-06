@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: #7c3aed;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0 0 28px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background: #7c3aed;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tbody tr:hover {
+      background: #f3e8ff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .registered {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    #message {
+      margin: 18px 0 0;
+      color: #475569;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      .container {
+        padding: 20px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Registration</h1>
+    <p class="subtitle">Student event registration details</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>PRN</th>
+            <th>Department</th>
+            <th>Year</th>
+            <th>Event Name</th>
+            <th>Registration Status</th>
+          </tr>
+        </thead>
+        <tbody id="studentTable"></tbody>
+      </table>
+    </div>
+
+    <p id="message">Loading registrations...</p>
+  </main>
+
+  <script>
+    const students = [
+      {
+        studentName: "Lakshika Jain",
+        prn: "24070521166",
+        department: "Computer Science",
+        year: "Third Year",
+        eventName: "Coding Challenge",
+        registrationStatus: "Registered"
+      },
+      {
+        studentName: "Diya Patel",
+        prn: "2024010069682",
+        department: "Electronics",
+        year: "First Year",
+        eventName: "Robotics Workshop",
+        registrationStatus: "Pending"
+      }
+    ];
+
+    const tableBody = document.getElementById("studentTable");
+    const message = document.getElementById("message");
+
+    students.forEach(student => {
+      const row = document.createElement("tr");
+
+      const values = [
+        student.studentName,
+        student.prn,
+        student.department,
+        student.year,
+        student.eventName
+      ];
+
+      values.forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+
+      const statusCell = document.createElement("td");
+      const statusLabel = document.createElement("span");
+      statusLabel.textContent = student.registrationStatus;
+      statusLabel.classList.add("status");
+
+      if (student.registrationStatus.toLowerCase() === "registered") {
+        statusLabel.classList.add("registered");
+      } else if (student.registrationStatus.toLowerCase() === "pending") {
+        statusLabel.classList.add("pending");
+      }
+
+      statusCell.appendChild(statusLabel);
+      row.appendChild(statusCell);
+      tableBody.appendChild(row);
+    });
+
+    message.textContent =
+      `${students.length} student registration(s) loaded.`;
+  </script>
+</body>
+</html>
